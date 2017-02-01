@@ -1,0 +1,20 @@
+.login, .registration{
+  display: inline-block;
+  vertical-align: top;
+  *width: 200px;
+  *height: 300px;
+}
+.main_content{
+  width: auto;
+}
+.container{
+  width: 970px;
+  margin: 0 auto;
+}
+.clear{
+  clear: both;
+}
+th, td{
+  padding: 10px;
+  border: 1px solid #ddd;
+}

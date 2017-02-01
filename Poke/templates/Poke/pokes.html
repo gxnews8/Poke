@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Pokes</title>
+    <link rel="stylesheet" href="{% static 'Poke/css/styles.css' %}">
+  </head>
+  <body>
+    <div class="container">
+      {% if request.session.user_id %}
+      <h1>Welcome, {{ name.alias }}!</h1>
+      <a href="{% url 'Poke:logout' %}">Logout</a>
+      {% endif %}
+      <h3>{{ count }} people poked you!</h3>
+      {% if mypokes %}
+        {% for mypoke in mypokes %}
+        <p>
+          {{ mypoke.user.alias }} poked you {{ counts }} times.
+        </p>
+        {% endfor %}
+      {% endif %}
+
+      <h3>People you may want to poke:</h3>
+      {% if users %}
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Alias</th>
+            <th>Email Address</th>
+            <th>Poke History</th>
+            <th>Action</th>
+          </tr>
+          {% for user in users %}
+          <tr>
+            <td>ID#{{ user.id }}. {{ user.name }}</td>
+            <td>{{ user.alias }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.id }} pokes</td>
+            <td>
+              <form class="" action="{% url 'Poke:pokes' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="user_id" value="{{ request.session.user_id }}">
+                <input type="hidden" name="poke" value="{{ user.id }}">
+                <input type="submit" name="submit" value="Poke!">
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %}
+    </div><!-- end_of_container-->
+  </body>
+</html>
